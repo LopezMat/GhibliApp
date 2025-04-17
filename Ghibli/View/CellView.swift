@@ -37,7 +37,7 @@ struct CellView: View {
                         .italic()
                 }
             }
-            .padding()
+            .padding(5)
             .onAppear(){
                 imageLoader.load(film.image)
         }
