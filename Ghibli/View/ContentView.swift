@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var filmGetter = FilmGetter()
+    
     var body: some View {
         NavigationView{
-            List{
-                
+            List(filmGetter.films, id: \.id){ film in
+                CellView(film: film)
             }
             .navigationTitle("🍥 Hayao Miyazaki 🇯🇵")
+            .onAppear(){
+                self.filmGetter.getFromAPI()
+            }
         }
     }
 }

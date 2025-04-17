@@ -14,31 +14,33 @@ struct CellView: View {
     @ObservedObject var imageLoader = LoadImage()
     
     var body: some View {
-        HStack{
-            //image si le lien existe
-            
-            if imageLoader.image != nil {
-                Image(uiImage: imageLoader.image!)
-                    .resizable()
-                    .frame(width: 55, height: 55, alignment: .center)
-                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                    .overlay(Circle().stroke(Color.purple, lineWidth: 2))
+        NavigationLink(destination: DetailFilmView(film: film)) {
+            HStack{
+                //image si le lien existe
+                
+                if imageLoader.image != nil {
+                    Image(uiImage: imageLoader.image!)
+                        .resizable()
+                        .frame(width: 55, height: 55, alignment: .center)
+                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                        .overlay(Circle().stroke(Color.purple, lineWidth: 2))
+                }
+                
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text(film.title)
+                        .font(.title2)
+                        .foregroundColor(.brown)
+                    Text ("Anne : \(film.release_date)")
+                        .font(.subheadline)
+                        .foregroundColor(.orange)
+                        .italic()
+                }
             }
-            
-            Spacer()
-            VStack(alignment: .trailing) {
-                Text(film.title)
-                    .font(.title2)
-                    .foregroundColor(.brown)
-                Text ("Anne : \(film.release_date)")
-                    .font(.subheadline)
-                    .foregroundColor(.orange)
-                    .italic()
-            }
+            .padding()
+            .onAppear(){
+                imageLoader.load(film.image)
         }
-        .padding()
-        .onAppear(){
-            imageLoader.load(film.image)
         }
     }
 }
